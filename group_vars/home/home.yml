@@ -1,0 +1,5 @@
+hostname: "home"
+ingress_ip: "185.28.85.12"
+ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIepO5H73X30fjSJrpFA3qUUYAN0S25/GYnR/0iZKUai home-laptop"
+ufw_allowed_ports:
+  - { port: 22, proto: tcp }
