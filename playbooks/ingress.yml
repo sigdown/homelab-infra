@@ -1,0 +1,6 @@
+---
+- name: Setup Ingress VPS
+  hosts: ingress
+  become: yes
+  roles:
+    - base

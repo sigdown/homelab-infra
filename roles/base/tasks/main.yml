@@ -1,0 +1,83 @@
+---
+# 1. Создаем пользователя и кладем его публичный ключ
+- name: Create sudo user
+  ansible.builtin.user:
+    name: "{{ new_user }}"
+    groups: sudo
+    shell: /bin/bash
+    append: yes
+
+- name: Add SSH key
+  ansible.posix.authorized_key:
+    user: "{{ new_user }}"
+    state: present
+    key: "{{ ssh_key }}"
+
+- name: Allow sudo without password
+  ansible.builtin.copy:
+    dest: "/etc/sudoers.d/{{ new_user }}"
+    content: "{{ new_user }} ALL=(ALL) NOPASSWD:ALL\n"
+    mode: '0440'
+    validate: 'visudo -cf %s'
+
+# 2. Отключаем cloud-init (если серверы в облаке)
+- name: Disable cloud-init
+  ansible.builtin.copy:
+    dest: /etc/cloud/cloud-init.disabled
+    content: ""
+
+- name: Remove cloud-init SSH overrides
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/ssh/sshd_config.d/50-cloud-init.conf
+    - /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
+  notify: Restart SSH
+
+# 3. Защищаем SSH
+- name: Configure SSH
+  ansible.builtin.copy:
+    dest: /etc/ssh/sshd_config.d/00-ansible.conf
+    content: |
+      PermitRootLogin no
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+    mode: '0644'
+  notify: Restart SSH
+
+# 4. Устанавливаем Docker и UFW
+- name: Install Docker and UFW
+  ansible.builtin.apt:
+    name: 
+      - docker.io
+      - docker-compose-v2
+      - python3-docker
+      - ufw
+    state: present
+    update_cache: yes
+
+# 5. Настраиваем файрвол (без костылей с command)
+- name: Configure UFW rules
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  loop: "{{ ufw_allowed_ports }}"
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+    policy: deny
+
+# 6. Задаем имя хоста
+- name: Configure hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+
+- name: Update hosts file
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: '^127\.0\.1\.1'
+    line: "127.0.1.1 {{ hostname }}"
+    state: present
