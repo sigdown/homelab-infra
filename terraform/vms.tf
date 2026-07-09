@@ -13,12 +13,12 @@ resource "proxmox_virtual_environment_vm" "k3s_master" {
     }
 
     memory {
-        dedicated = 2048
+        dedicated = 3072
     }
 
     disk {
         datastore_id = "local-lvm"
-        size = 40
+        size = 20
         interface = "scsi0"
     }
 
@@ -41,7 +41,7 @@ resource "proxmox_virtual_environment_vm" "k3s_master" {
 }
 
 resource "proxmox_virtual_environment_vm" "k3s_workers" {
-    count = 2
+    count = 3
     name = "k3s-worker-${count.index + 1}"
     node_name = "pve"
     vm_id = 102 + count.index
@@ -56,7 +56,7 @@ resource "proxmox_virtual_environment_vm" "k3s_workers" {
     }
 
     memory {
-        dedicated = 1536
+        dedicated = 3072
     }
 
     disk {
