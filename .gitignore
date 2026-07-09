@@ -1,3 +1,8 @@
 # Secrets
 group_vars/all/vault.yml
 .vault_pass
+terraform/terraform.tfvars
+terraform/.terraform
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup

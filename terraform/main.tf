@@ -1,16 +1,14 @@
 terraform {
     required_providers {
         proxmox = {
-            source = "telmate/proxmox"
-            version = "2.9.14"
+            source = "bpg/proxmox"
+            version = "0.50.0"
         }
     }
 }
 
 provider "proxmox" {
-    pm_tls_untrusted = true
-    pm_api_url = var.pm_api_url
-    pm_api_token_id = var.pm_api_token_id
-    pm_api_token_secret = var.pm_api_token_secret
+    endpoint = "https://192.168.1.110:8006"
+    api_token = "${var.pm_api_token_id}=${var.pm_api_token_secret}"
+    insecure = true
 }
-
