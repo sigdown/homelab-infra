@@ -29,7 +29,7 @@ resource "proxmox_virtual_environment_vm" "k3s_master" {
     initialization {
         user_account {
             username = "ubuntu"
-            keys = [var.ssh_key]
+            keys = [var.cluster_ssh_key]
         }
         ip_config {
             ipv4 {
@@ -69,10 +69,10 @@ resource "proxmox_virtual_environment_vm" "k3s_workers" {
         bridge = "vmbr0"
     }
 
-initialization {
+    initialization {
         user_account {
             username = "ubuntu"
-            keys = [var.ssh_key]
+            keys = [var.cluster_ssh_key]
         }
         ip_config {
             ipv4 {
