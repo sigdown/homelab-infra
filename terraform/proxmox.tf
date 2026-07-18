@@ -28,7 +28,7 @@ resource "proxmox_virtual_environment_vm" "k3s_master" {
 
     initialization {
         user_account {
-            username = "ubuntu"
+            username = "root"
             keys = [var.cluster_ssh_key]
         }
         ip_config {
@@ -71,7 +71,7 @@ resource "proxmox_virtual_environment_vm" "k3s_workers" {
 
     initialization {
         user_account {
-            username = "ubuntu"
+            username = "root"
             keys = [var.cluster_ssh_key]
         }
         ip_config {
