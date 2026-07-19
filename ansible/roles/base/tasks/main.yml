@@ -1,0 +1,63 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/base
+
+- name: Create sudo user
+  ansible.builtin.user:
+    name: "{{ new_user }}"
+    groups: sudo
+    shell: /bin/bash
+    append: yes
+
+- name: Add SHH key
+  ansible.posix.authorized_key:
+    user: "{{ new_user }}"
+    state: present
+    key: "{{ ssh_key }}"
+
+- name: Allow sudo without password
+  ansible.builtin.copy:
+    dest: "/etc/sudoers.d/{{ new_user }}"
+    content: "{{ new_user }} ALL=(ALL) NOPASSWD:ALL\n"
+    mode: '0440'
+    validate: 'visudo -cf %s'
+
+- name: Configure SSH
+  ansible.builtin.copy:
+    dest: /etc/ssh/sshd_config.d/00-ansible.conf
+    content: |
+      PermitRootLogin no
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+    mode: '0644'
+  notify: Restart SSH
+
+- name: Install UFW
+  ansible.builtin.apt:
+    name:
+      - ufw
+    state: present
+    update_cache: yes
+
+- name: Configure UFW
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  loop: "{{ ufw_allowed_ports }}"
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+    policy: deny
+
+- name: Configure hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+
+- name: Update hosts file
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: "^127\.0\.1\.1"
+    line: "127.0.1.1 {{ hostname }}"
+    state: present
