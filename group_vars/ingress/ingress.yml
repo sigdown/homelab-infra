@@ -1,7 +1,0 @@
-hostname: "ingress"
-ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINCU4mNNlMXcR9hY57BD9af1ZfIUypVVImuz3yPvCWna ingress-laptop"
-ufw_allowed_ports:
-  - { port: 22, proto: tcp }
-  - { port: 80, proto: tcp }
-  - { port: 443, proto: tcp }
-  - { port: 2333, proto: tcp }
