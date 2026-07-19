@@ -2,8 +2,8 @@ all:
   children:
     edge:
       hosts:
-        edge-1:
-          ansible_host: 159.194.229.97
+        beget_vps:
+          ansible_host: 159.194.234.100
           ansible_user: root
     home:
       children:

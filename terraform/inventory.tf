@@ -5,7 +5,7 @@ all:
   children:
     edge:
       hosts:
-        beget_vps:
+        edge-1:
           ansible_host: ${beget_compute_instance.edge.ip_address}
           ansible_user: root
     home:
