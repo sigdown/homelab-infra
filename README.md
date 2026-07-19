@@ -1,4 +1,4 @@
-# Homelab Infrastracture (IaC)
+# Homelab Infrastructure (IaC)
 
 Проект домашней гибридной лаборатории, основанный на концепции инфраструктура как кода (Infrastructure as Code). Включает в себя локальный гипервизор Proxmox и облачный Edge-сервер (Beget).
 
