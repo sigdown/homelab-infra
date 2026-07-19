@@ -1,9 +1,12 @@
+resource "local_file" "ansible_inventory" {
+  filename = "../ansible/inventory.yml"
+  content = <<-EOT
 all:
   children:
     edge:
       hosts:
         beget_vps:
-          ansible_host: 45.9.42.227
+          ansible_host: ${beget_compute_instance.edge.ip_address}
           ansible_user: root
     home:
       children:
@@ -23,3 +26,5 @@ all:
             k3s-worker-3:
               ansible_host: 192.168.1.104
               ansible_user: root
+  EOT
+}
