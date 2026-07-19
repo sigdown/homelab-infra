@@ -53,11 +53,11 @@
 
 - name: Configure hostname
   ansible.builtin.hostname:
-    name: "{{ hostname }}"
+    name: "{{ inventory_hostname }}"
 
 - name: Update hosts file
   ansible.builtin.lineinfile:
     path: /etc/hosts
-    regexp: "^127\.0\.1\.1"
-    line: "127.0.1.1 {{ hostname }}"
+    regexp: '^127\.0\.1\.1'
+    line: "127.0.1.1 {{ inventory_hostname }}"
     state: present
