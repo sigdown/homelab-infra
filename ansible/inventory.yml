@@ -3,7 +3,7 @@ all:
     edge:
       hosts:
         edge-1:
-          ansible_host: 159.194.235.74
+          ansible_host: 85.198.68.18
           ansible_user: ubuntu
     home:
       children:

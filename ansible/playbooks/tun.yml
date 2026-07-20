@@ -1,0 +1,5 @@
+- name: Install docker to router nodes (edge and gateway)
+  hosts: edge:gateway
+  become: yes
+  roles:
+    - docker

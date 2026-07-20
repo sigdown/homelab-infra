@@ -1,5 +1,5 @@
 # Secrets
-group_vars/all/vault.yml
+ansible/group_vars/all/vault.yml
 .vault_pass
 terraform/terraform.tfvars
 terraform/.terraform
