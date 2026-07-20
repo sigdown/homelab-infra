@@ -1,3 +1,45 @@
+resource "proxmox_virtual_environment_vm" "gateway-1" {
+    name = "gateway-1"
+    node_name = "pve"
+    vm_id = 100
+
+    clone {
+        vm_id = 9000
+        full = true
+    }
+
+    cpu {
+        cores = 1
+    }
+
+    memory {
+        dedicated = 1024
+    }
+
+    disk {
+        datastore_id = "local-lvm"
+        size = 10
+        interface = "scsi0"
+    }
+
+    network_device {
+        bridge = "vmbr0"
+    }
+
+    initialization {
+        user_account {
+            username = "root"
+            keys = [var.cluster_ssh_key]
+        }
+        ip_config {
+            ipv4 {
+                address = "192.168.1.100/24"
+                gateway = "192.168.1.1"
+            }
+        }
+    }
+}
+
 resource "proxmox_virtual_environment_vm" "k3s_master" {
     name = "k3s-master-1"
     node_name = "pve"
@@ -13,7 +55,7 @@ resource "proxmox_virtual_environment_vm" "k3s_master" {
     }
 
     memory {
-        dedicated = 3072
+        dedicated = 4096
     }
 
     disk {
