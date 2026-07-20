@@ -1,0 +1,16 @@
+services:
+  rathole-server:
+    image: rapiz1/rathole:v0.5.0
+    restart: unless-stopped
+    command: --server /app/server.toml
+    ports:
+      - "2333:2333"
+      - "2222:2222"
+    volumes:
+      - /opt/rathole/server.toml:/app/server.toml
+    networks:
+      - edge_net
+
+networks:
+  edge_net:
+    name: edge_net

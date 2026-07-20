@@ -1,0 +1,7 @@
+[server]
+bind_addr = "0.0.0.0:2333"
+default_token = "{{ rathole_token }}"
+
+[server.services.ssh]
+token = "{{ rathole_token }}"
+bind_addr = "0.0.0.0:2222"

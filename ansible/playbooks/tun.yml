@@ -3,3 +3,9 @@
   become: yes
   roles:
     - docker
+
+- name: Install rathole to nodes
+  hosts: edge
+  become: yes
+  roles:
+    - rathole_server
