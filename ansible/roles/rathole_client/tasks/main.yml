@@ -1,0 +1,25 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/rathole_server
+- name: Create rathole directory
+  ansible.builtin.file:
+    path: /opt/rathole
+    state: directory
+
+- name: Copy rathole client config
+  ansible.builtin.template:
+    src: client.toml.j2
+    dest: /opt/rathole/client.toml
+  notify: Restart rathole client
+
+- name: Copy docker-compose template
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /opt/rathole/docker-compose.yml
+  notify: Restart rathole client
+
+- name: Run rathole client docker-compose
+  community.docker.docker_compose_v2:
+    project_src: /opt/rathole
+    state: present
+  

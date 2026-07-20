@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for roles/rathole_client
+- name: Restart rathole client
+  community.docker.docker_compose_v2:
+    project_src: /opt/rathole
+    state: present
+    recreate: always

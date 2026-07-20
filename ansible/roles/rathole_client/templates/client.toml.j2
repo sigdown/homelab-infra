@@ -1,0 +1,6 @@
+[client]
+remote_addr = "{{ hostvars['edge-1']['ansible_host'] }}:2333"
+default_token = "{{ rathole_token }}"
+
+[client.services.ssh]
+local_addr = "192.168.1.100:22"

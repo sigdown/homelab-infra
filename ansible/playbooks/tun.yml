@@ -4,8 +4,14 @@
   roles:
     - docker
 
-- name: Install rathole to nodes
+- name: Install rathole to server
   hosts: edge
   become: yes
   roles:
     - rathole_server
+
+- name: Install rathole to client
+  hosts: gateway
+  become: yes
+  roles:
+    - rathole_client

@@ -1,0 +1,8 @@
+services:
+  rathole-client:
+    image: rapiz1/rathole:v0.5.0
+    restart: unless-stopped
+    command: --client /app/client.toml
+    network_mode: host
+    volumes:
+      - /opt/rathole/client.toml:/app/client.toml
