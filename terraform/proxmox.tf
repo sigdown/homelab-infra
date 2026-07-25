@@ -55,7 +55,7 @@ resource "proxmox_virtual_environment_vm" "k3s_master" {
     }
 
     memory {
-        dedicated = 4096
+        dedicated = 2048
     }
 
     disk {

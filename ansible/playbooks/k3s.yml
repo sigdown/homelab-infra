@@ -1,0 +1,6 @@
+---
+- name: Deploy K3s Kubernetes Cluster
+  hosts: home
+  become: yes
+  roles:
+    - k3s
