@@ -1,0 +1,18 @@
+---
+- name: Set master IP fact
+  ansible.builtin.set_fact:
+    master_ip: "{{ hostvars[groups['k3s_masters'][0]]['ansible_host'] }}"
+
+- name: Install K3s server
+  ansible.builtin.shell: |
+    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --write-kubeconfig-mode 644" sh -s - server --tls-san {{ master_ip }} --node-taint node-role.kubernetes.io/master=true:NoSchedule
+  args:
+    creates: /usr/local/bin/k3s
+  register: master_install
+
+- name: Wait for K3s API to be ready
+  ansible.builtin.wait_for:
+    port: 6443
+    host: "{{ master_ip }}"
+    timeout: 120
+  when: master_install.changed

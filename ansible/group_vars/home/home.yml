@@ -1,3 +1,10 @@
 ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIepO5H73X30fjSJrpFA3qUUYAN0S25/GYnR/0iZKUai home-laptop"
-ufw_allowed_ports:
+base_allowed_ports:
   - { port: 22, proto: tcp }
+
+k3s_master_ports: 
+  - { port: 6443, proto: tcp }
+
+k3s_workers_ports:
+  - { port: 10250, proto: tcp }
+  - { port: 8472, proto: udp}

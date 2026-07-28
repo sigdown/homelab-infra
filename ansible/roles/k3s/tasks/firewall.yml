@@ -1,0 +1,20 @@
+---
+- name: Allow K3s master ports
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  loop: "{{ k3s_master_ports }}"
+  when: "'k3s_masters' in group_names"
+
+- name: Allow K3s node ports
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  loop: "{{ k3s_master_ports }}"
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+    policy: deny

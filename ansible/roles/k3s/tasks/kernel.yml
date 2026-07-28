@@ -1,0 +1,28 @@
+---
+- name: Disable swap (K3s requirement)
+  ansible.builtin.shell: swapoff -a
+  changed_when: false
+
+- name: Remove swap from /etc/tab
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    regexp: 'exp'
+    state: absent
+
+- name: Load required kernel modules
+  community.general.modprobe:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - br_netfilter
+    - overlay
+
+- name: Set sysctl for Kubernetes networking
+  ansible.posix.sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: yes
+  loop:
+    - { name: 'net.bridge.bridge-nf-call-iptables', value: '1' }
+    - { name: 'net.ipv4.ip_forward', value: '1' }

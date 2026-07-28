@@ -44,7 +44,7 @@
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
-  loop: "{{ ufw_allowed_ports }}"
+  loop: "{{ base_allowed_ports }}"
 
 - name: Enable UFW
   community.general.ufw:
