@@ -1,9 +1,9 @@
 # Secrets
-ansible/group_vars/all/vault.yml
+vault.yml
 .vault_pass
-terraform/terraform.tfvars
-terraform/.terraform
-terraform/.terraform.lock.hcl
-terraform/terraform.tfstate
-terraform/terraform.tfstate.backup
-terraform/.terraform.fstate.lock.info
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+terraform.fstate.lock.info
+terraform.tfvars
+.terraform/

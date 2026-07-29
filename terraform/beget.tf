@@ -8,6 +8,8 @@ data "beget_software" "ubuntu" {
 }
 
 resource "beget_compute_instance" "edge" {
+  count = var.lab_enabled ? 1 : 0
+
   name        = "Edge"
   description = "Edge node for k3s homelab"
   hostname    = "edge-1"
@@ -28,5 +30,15 @@ resource "beget_compute_instance" "edge" {
 
   access = {
     ssh_keys = [beget_ssh_key.edge_key.id]
+  }
+}
+
+resource "beget_additional_ip" "edge_ip" {
+  region = "ru1"
+
+  compute_instance_id = var.lab_enabled ? beget_compute_instance.edge[0].id : null
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
