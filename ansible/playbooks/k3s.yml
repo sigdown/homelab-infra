@@ -1,6 +1,6 @@
 ---
 - name: Deploy K3s Kubernetes Cluster
-  hosts: k3_masters:k3s_workers
+  hosts: k3s_masters:k3s_workers
   become: yes
   roles:
     - k3s
