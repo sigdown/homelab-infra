@@ -5,7 +5,7 @@ services:
     command: --server /app/server.toml
     ports:
       - "2333:2333"
-      - "2222:2222"
+      - "443:443"
     volumes:
       - /opt/rathole/server.toml:/app/server.toml
     networks:
