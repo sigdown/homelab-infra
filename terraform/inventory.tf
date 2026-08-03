@@ -18,20 +18,20 @@ all:
           hosts:
             k3s-master-1:
               ansible_host: 192.168.1.101
-              ansible_user: root
+              ansible_user: ubuntu
 
         k3s_workers:
           hosts:
             k3s-worker-1:
               ansible_host: 192.168.1.102
-              ansible_user: root
+              ansible_user: ubuntu
 
             k3s-worker-2:
               ansible_host: 192.168.1.103
-              ansible_user: root
+              ansible_user: ubuntu
 
             k3s-worker-3:
               ansible_host: 192.168.1.104
-              ansible_user: root
+              ansible_user: ubuntu
   EOT
 }
