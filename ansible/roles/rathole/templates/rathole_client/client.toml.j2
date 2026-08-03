@@ -1,6 +1,0 @@
-[client]
-remote_addr = "{{ hostvars['edge-1']['ansible_host'] }}:2333"
-default_token = "{{ rathole_token }}"
-
-[client.services.web]
-local_addr = "192.168.1.102:443"

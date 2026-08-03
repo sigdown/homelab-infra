@@ -1,17 +1,11 @@
 resource "local_file" "ansible_inventory" {
-  count = var.lab_enabled ? 1 : 0
+  count = 1
 
   filename = "${path.module}/../ansible/inventory.yml"
 
   content = <<-EOT
 all:
   children:
-    edge:
-      hosts:
-        edge-1:
-          ansible_host: ${beget_additional_ip.edge_ip.ip_address}
-          ansible_user: ubuntu
-
     home:
       children:
         gateway:

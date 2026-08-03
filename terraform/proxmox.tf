@@ -1,5 +1,5 @@
 resource "proxmox_virtual_environment_vm" "gateway-1" {
-  count = var.lab_enabled ? 1 : 0
+  count = 0
 
   name            = "gateway-1"
   node_name       = "pve"
@@ -12,16 +12,16 @@ resource "proxmox_virtual_environment_vm" "gateway-1" {
   }
 
   cpu {
-    cores = 1
+    cores = 3
   }
 
   memory {
-    dedicated = 1024
+    dedicated = 12288
   }
 
   disk {
     datastore_id = "local-lvm"
-    size         = 10
+    size         = 20
     interface    = "scsi0"
   }
 
@@ -45,7 +45,7 @@ resource "proxmox_virtual_environment_vm" "gateway-1" {
 }
 
 resource "proxmox_virtual_environment_vm" "k3s_master" {
-  count = var.lab_enabled ? 1 : 0
+  count = 1
 
   name            = "k3s-master-1"
   node_name       = "pve"
@@ -91,7 +91,7 @@ resource "proxmox_virtual_environment_vm" "k3s_master" {
 }
 
 resource "proxmox_virtual_environment_vm" "k3s_workers" {
-  count = var.lab_enabled ? 3 : 0
+  count = 3
 
   name            = "k3s-worker-${count.index + 1}"
   node_name       = "pve"
