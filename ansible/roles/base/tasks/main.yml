@@ -9,7 +9,7 @@
     shell: /bin/bash
     append: yes
 
-- name: Add SHH key
+- name: Add SSH key
   ansible.posix.authorized_key:
     user: "{{ new_user }}"
     state: present
